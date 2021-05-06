@@ -13,7 +13,7 @@ const PhotosChunk: React.FC<Props> = (props) => {
   return (
     <Animated.View
       key={'PhotoChunkView_' + props.numCol}
-      style={[styles.AnimatedView,{flex: 1/props.numCol,}]}
+      style={[styles.AnimatedView,{width: SCREEN_WIDTH/props.numCol,}]}
     >
       <Animated.Image
         key={"Image_"+props.numCol+"_"+props.photo.uri}

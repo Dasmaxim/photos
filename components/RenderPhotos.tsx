@@ -107,7 +107,7 @@ const RenderPhotos: React.FC<Props> = (props) => {
         )}
         //keyExtractor={(item, index) => index}
         scrollEnabled={false}
-        contentContainerStyle={{ justifyContent: 'center', flexDirection: 'row' }}
+        contentContainerStyle={{ justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap' }}
       />
     </Animated.View>
   ) : (
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     backgroundColor: '#fff',
+    width: SCREEN_WIDTH
   },
 });
 export default RenderPhotos;
