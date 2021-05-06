@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {photoChunk} from '../types/interfaces';
 import PhotosChunk from './PhotosChunk';
+import * as MediaLibrary from 'expo-media-library';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
@@ -29,8 +30,10 @@ interface Props {
 }
 
 const RenderPhotos: React.FC<Props> = (props) => {
+  const [scrollRef, setScrollRef] = useState<SectionList<MediaLibrary.Asset, photoChunk> | null>(null);
   return props.photos ? (
     <Animated.View
+      key={"View" + props.separator + props.numColumns}
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
         flex: 1,
@@ -65,18 +68,19 @@ const RenderPhotos: React.FC<Props> = (props) => {
               , Animated.multiply(2,props.sizeTransformScale))
           }
         ],
-      }}>
+      }}
+    >
       <SectionList
+        key={"SectionList"+ props.separator + props.numColumns}
+        ref={ref=>(setScrollRef(ref))}
         initialNumToRender={Math.ceil(SCREEN_HEIGHT/(SCREEN_WIDTH/props.numColumns)) + props.numColumns*4}
         sections={props.photos}
         //keyExtractor={(item, index) => item.uri + index}
         renderItem={({item}) =>
           <PhotosChunk
-            photos={item}
-            opacity={props.opacity}
+            photo={item}
             numCol={props.numColumns}
             loading={props.loading}
-            scale={props.scale}
             key={'PhotosChunk' + props.numColumns}
           />
         }
@@ -101,12 +105,14 @@ const RenderPhotos: React.FC<Props> = (props) => {
         renderSectionHeader={({section: {date}}) => (
           <Text style={styles.header}>{date}</Text>
         )}
-        key={props.separator + props.numColumns}
+        //keyExtractor={(item, index) => index}
         scrollEnabled={false}
+        contentContainerStyle={{ justifyContent: 'center', flexDirection: 'row' }}
       />
     </Animated.View>
   ) : (
     <Animated.View
+    key={"ViewLoading" + props.separator + props.numColumns}
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
         flex: 1,

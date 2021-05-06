@@ -26,16 +26,16 @@ export const sectionizeMedia = (
       }
       if (timestampIndexInData > -1) {
         if (result[timestampIndexInData].data) {
-          result[timestampIndexInData].data[0].push(media);
+          result[timestampIndexInData].data.push(media);
         } else {
-          result[timestampIndexInData].data = [[]];
-          result[timestampIndexInData].data[0].push(media);
+          result[timestampIndexInData].data = [];
+          result[timestampIndexInData].data.push(media);
         }
       } else {
         if (currentTimestamp) {
           let temp = [];
           temp.push(media);
-          result.push({date: currentTimestamp, data: [temp]});
+          result.push({date: currentTimestamp, data: temp});
           timestampIndexInData = result.length - 1;
         }
       }
