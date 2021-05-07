@@ -107,7 +107,7 @@ const RenderPhotos: React.FC<Props> = (props) => {
         )}
         //keyExtractor={(item, index) => index}
         scrollEnabled={false}
-        contentContainerStyle={{ justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap' }}
+        contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row', flexWrap: 'wrap' }}
       />
     </Animated.View>
   ) : (

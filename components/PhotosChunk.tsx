@@ -1,6 +1,7 @@
 import * as MediaLibrary from 'expo-media-library';
 import React from 'react';
-import {Animated, FlatList, Text, StyleSheet, Dimensions, View} from 'react-native';
+import {Image, StyleSheet, Dimensions, View} from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 interface Props {
@@ -11,11 +12,11 @@ interface Props {
 
 const PhotosChunk: React.FC<Props> = (props) => {
   return (
-    <Animated.View
+    <View
       key={'PhotoChunkView_' + props.numCol}
       style={[styles.AnimatedView,{width: SCREEN_WIDTH/props.numCol,}]}
     >
-      <Animated.Image
+      <Image
         key={"Image_"+props.numCol+"_"+props.photo.uri}
         source={{uri: props.photo.uri}}
         // eslint-disable-next-line react-native/no-inline-styles
@@ -26,7 +27,7 @@ const PhotosChunk: React.FC<Props> = (props) => {
           margin: 1,
         }}
       />
-    </Animated.View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
