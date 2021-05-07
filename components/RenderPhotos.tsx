@@ -6,10 +6,11 @@ import {
   StyleSheet,
   StatusBar,
   SectionList,
+  SectionListData,
 } from 'react-native';
 import {photoChunk} from '../types/interfaces';
 import PhotosChunk from './PhotosChunk';
-import * as MediaLibrary from 'expo-media-library';
+import { Asset } from 'expo-media-library';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
@@ -30,7 +31,35 @@ interface Props {
 }
 
 const RenderPhotos: React.FC<Props> = (props) => {
-  const [scrollRef, setScrollRef] = useState<SectionList<MediaLibrary.Asset, photoChunk> | null>(null);
+  const [scrollRef, setScrollRef] = useState<SectionList<Asset, photoChunk> | null>(null);
+  const getItemLayout:any = (data:(SectionListData<Asset[], photoChunk>[] | null), index:number) => {
+    let result:{
+      length: number;
+      offset: number;
+      index: number;
+    } = {
+      length: SCREEN_WIDTH/props.numColumns,
+      offset: (Math.floor((index+1)/2)-1-((index+1) % 2))*SCREEN_WIDTH/props.numColumns,
+      index,
+    };
+    return result;
+  };
+  useEffect(()=>{
+    const scrollToLocation = (sectionIndex:number) => {
+      if(scrollRef){
+        scrollRef.scrollToLocation({
+          animated: true,
+          sectionIndex: sectionIndex,
+          itemIndex: 0,
+          viewPosition: 0
+        });
+      };
+    }
+    if(props.numColumns===2){
+      scrollToLocation(10);
+    }
+  },[scrollRef]);
+
   return props.photos ? (
     <Animated.View
       key={"View" + props.separator + props.numColumns}
@@ -106,8 +135,9 @@ const RenderPhotos: React.FC<Props> = (props) => {
           <Text style={styles.header}>{date}</Text>
         )}
         //keyExtractor={(item, index) => index}
-        scrollEnabled={false}
+        scrollEnabled={true}
         contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row', flexWrap: 'wrap' }}
+        getItemLayout={getItemLayout}
       />
     </Animated.View>
   ) : (

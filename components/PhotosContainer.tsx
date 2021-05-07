@@ -45,7 +45,7 @@ const PhotosContainer = () => {
     if (permission) {
       navigation.navigate('HomePage');
       setLoading(true);
-      getStorageMedia(permission, 50, mediaEndCursor)?.then(
+      getStorageMedia(permission, 550, mediaEndCursor)?.then(
         (res: MediaItem) => {
           setStoragePhotos(res.assets);
           setMediaEndCursor(res.endCursor);
