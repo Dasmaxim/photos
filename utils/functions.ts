@@ -91,22 +91,25 @@ export const getStorageMedia = (
     MediaLibrary.MediaType.video,
   ],
 ) => {
-  if (after === '') {
-    after = '0';
-  }
-  if (permission) {
-    let mediaFilter: MediaLibrary.AssetsOptions = {
-      first: limit,
-      mediaType: mediaType,
-      sortBy: [MediaLibrary.SortBy.modificationTime],
-      after: after,
-      createdAfter: createdAfter,
-      createdBefore: createdBefore,
-    };
-
-    let media = MediaLibrary.getAssetsAsync(mediaFilter);
-    return media;
-  }
+    if (permission) {
+      let mediaFilter: MediaLibrary.AssetsOptions = {
+        first: limit,
+        mediaType: mediaType,
+        sortBy: [MediaLibrary.SortBy.modificationTime],
+      };
+      if(after){
+        mediaFilter.after = after;
+      }
+      if(createdAfter){
+        mediaFilter.createdAfter = createdAfter;
+      }
+      if(createdBefore){
+        mediaFilter.createdBefore = createdBefore;
+      }
+      
+      let media = MediaLibrary.getAssetsAsync(mediaFilter);
+      return media;
+    }
 };
 
 export const pow2abs = (a: number, b: number) => {

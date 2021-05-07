@@ -48,6 +48,7 @@ const PhotosChunk: React.FC<Props> = (props) => {
         }
         style={styles.FlatList}
         columnWrapperStyle={{alignItems:'flex-start', }}
+        scrollEnabled={false}
       />
     </View>
   );

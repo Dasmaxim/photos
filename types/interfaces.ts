@@ -51,3 +51,10 @@ export interface MediaItem {
   hasNextPage: boolean;
   totalCount: number;
 }
+
+
+export interface sectionListItemLayout {
+  length: number;
+  offset: number;
+  index: number;
+}
