@@ -18,7 +18,8 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
 interface Props {
-  photos: FlatSection;
+  photos: Asset[];
+  header: {[key:string]: {header:string, index:number}};
   margin: Animated.AnimatedInterpolation;
   maxWidth: number;
   minWidth: number;
@@ -36,14 +37,14 @@ const RenderPhotos: React.FC<Props> = (props) => {
   const [dataProvider, setDataProvider] = useState<DataProvider>(new DataProvider((r1, r2) => {
     return r1 !== r2;
   }));
-  const [layoutProvider, setLayoutProvider] = useState<any>(LayoutUtil.getLayoutProvider(2, 'day', props.photos.headerIndexes));
+  const [layoutProvider, setLayoutProvider] = useState<any>(LayoutUtil.getLayoutProvider(2, 'day', props.header));
 
   useEffect(()=>{
-    setDataProvider(dataProvider.cloneWithRows(props.photos.flatMedias));
+    setDataProvider(dataProvider.cloneWithRows(props.photos));
   },[props.photos]);
   useEffect(()=>{
-    setLayoutProvider(LayoutUtil.getLayoutProvider(props.numColumns, props.separator, props.photos.headerIndexes));
-  },[props.numColumns, props.separator]);
+    setLayoutProvider(LayoutUtil.getLayoutProvider(props.numColumns, props.separator, props.header));
+  },[props.numColumns, props.separator, props.header]);
 
   const renderFooter = () => {
     //Second view makes sure we don't unnecessarily change height of the list on this event. That might cause indicator to remain invisible
@@ -57,10 +58,11 @@ const RenderPhotos: React.FC<Props> = (props) => {
       : <></>;
   };
 
-  const rowRenderer = (type:string | number, data:flatMedia) => {
+  const rowRenderer = (type:string | number, data:Asset, header:{[key:string]: {header:string, index:number}}) => {
     //We have only one view type so not checks are needed here
     return <PhotosChunk
       photo={data}
+      header={header}
       opacity={props.opacity}
       numCol={props.numColumns}
       loading={props.loading}
@@ -68,7 +70,7 @@ const RenderPhotos: React.FC<Props> = (props) => {
       key={'PhotosChunk' + props.numColumns}
     />;
   };
-  return props.photos.flatMedias ? (
+  return props.photos ? (
     <Animated.View
       // eslint-disable-next-line react-native/no-inline-styles
       style={{

@@ -4,7 +4,7 @@ import {Animated, Dimensions, View, StatusBar} from 'react-native';
 import {sortCondition} from '../types/interfaces';
 import RenderPhotos from './RenderPhotos';
 import * as MediaLibrary from 'expo-media-library';
-import {sectionizeMedia, flattenDates} from '../utils/functions';
+import {sectionizeMedia, flattenDates, CreateHeader} from '../utils/functions';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
@@ -24,8 +24,7 @@ interface Props {
 }
 
 const AllPhotos: React.FC<Props> = (props) => {
-  let dayFlatten = flattenDates(sectionizeMedia(props.photos, 'day'));
-  let monthFlatten = flattenDates(sectionizeMedia(props.photos, 'month'));
+  let mediaHeaders = CreateHeader(props.photos);
   return (
     <View
       style={{
@@ -36,7 +35,8 @@ const AllPhotos: React.FC<Props> = (props) => {
       }}
     >
       <RenderPhotos
-        photos={dayFlatten}
+        photos={props.photos}
+        header={mediaHeaders.day}
         loading={props.loading}
         margin={props.baseScale.interpolate({
           inputRange: [0, 1, 3],
@@ -61,7 +61,8 @@ const AllPhotos: React.FC<Props> = (props) => {
         scale={props.scale}
       />
       <RenderPhotos
-        photos={dayFlatten}
+        photos={props.photos}
+        header={mediaHeaders.day}
         loading={props.loading}
         margin={props.baseScale.interpolate({
           inputRange: [0, 1, 3],
@@ -86,7 +87,8 @@ const AllPhotos: React.FC<Props> = (props) => {
         scale={props.scale}
       />
       <RenderPhotos
-        photos={monthFlatten}
+        photos={props.photos}
+        header={mediaHeaders.month}
         loading={props.loading}
         margin={props.baseScale.interpolate({
           inputRange: [0, 1, 3],

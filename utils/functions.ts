@@ -7,6 +7,42 @@ import {
   flatMedia,
 } from '../types/interfaces';
 
+export const timestampToDate = (
+  timestamp: number,
+  condition: 'day' | 'month',
+) => {
+  let date = new Date(timestamp);
+  let month = date.getUTCMonth(); //months from 1-12
+  let day = date.getUTCDate();
+  let year = date.getUTCFullYear();
+  let result;
+
+  if (condition === 'day') {
+    result = new Date(year, month, day).toString().split(year.toString())[0];
+  } else if (condition === 'month') {
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    result = monthNames[new Date(year, month).getMonth()];
+  }
+  if (result) {
+    return result;
+  } else {
+    return 'unknown';
+  }
+};
+
 export const sectionizeMedia = (
   medias: Array<Asset>,
   sortCondition_i: 'day' | 'month',
@@ -78,40 +114,36 @@ export const flattenDates = (
   };
   return result;
 }
-export const timestampToDate = (
-  timestamp: number,
-  condition: 'day' | 'month',
-) => {
-  let date = new Date(timestamp);
-  let month = date.getUTCMonth(); //months from 1-12
-  let day = date.getUTCDate();
-  let year = date.getUTCFullYear();
-  let result;
 
-  if (condition === 'day') {
-    result = new Date(year, month, day).toString().split(year.toString())[0];
-  } else if (condition === 'month') {
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    result = monthNames[new Date(year, month).getMonth()];
+export const CreateHeader = (
+  medias: Array<Asset>,
+  sortCondition_i: Array<'day' | 'month'> =['day', 'month'],
+  headerIndexes: {[key:string]: {[key:string]: {header:string, index:number}}} = {},
+) => {
+  if (medias && medias.length) {
+    let key:number = 0;
+    for(key; key < medias.length; key++){
+      let media:Asset = medias[key];
+      for(let condition of sortCondition_i){
+        let mediaTimestamp = timestampToDate(
+          media.modificationTime,
+          condition,
+        );
+        if(!headerIndexes[condition]){
+          headerIndexes[condition] = {};
+        }
+        if(!headerIndexes[condition][mediaTimestamp]){
+          headerIndexes[condition][mediaTimestamp] = {
+            header: mediaTimestamp,
+            index: key,
+          };
+        }else{
+          
+        }
+      }
+    }
   }
-  if (result) {
-    return result;
-  } else {
-    return 'unknown';
-  }
+  return headerIndexes;
 };
 
 export const getStorageMedia = (
