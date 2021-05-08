@@ -6,7 +6,8 @@ import { flatMedia } from '../types/interfaces';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const isIOS = Platform.OS === 'ios';
 interface Props {
-  photo: flatMedia;
+  photo: Asset;
+  header: {[key:string]: {header:string, index:number}};
   opacity: Animated.AnimatedInterpolation;
   numCol: 2 | 3 | 4;
   loading: boolean;
@@ -43,7 +44,7 @@ const PhotosChunk: React.FC<Props> = (props) => {
           ref={ref => {
             setImageRef(ref);
           }}
-          source={{uri: props.photo.value.uri}}
+          source={{uri: props.photo.uri}}
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
             height: SCREEN_WIDTH / props.numCol,
@@ -51,7 +52,7 @@ const PhotosChunk: React.FC<Props> = (props) => {
             backgroundColor: props.loading ? 'grey' : 'white',
             margin: 1,
           }}
-          key={props.photo.value.uri}
+          key={props.photo.uri}
           onLoad={handleOnLoad}
         />
       </View>

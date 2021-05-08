@@ -15,13 +15,17 @@ export class LayoutUtil {
           (type, dim, index) => {
             let isHeader = false;
               for(const key in header) {
-                if(header[key] && header[key].index && header[key].index===index) {
-                  isHeader = true;
+                if(header[key] && header[key].index) {
+                  for(let i=0; i<colNum;i++){
+                    if(header[key].index===index - i){
+                      isHeader = true;
+                    }
+                  }
                 }
               }
             const windowWidth = LayoutUtil.getWindowWidth();
             if(isHeader){
-              dim.width = windowWidth;
+              dim.width = windowWidth / colNum;
               dim.height = headerHeight + windowWidth / colNum;
             }else{
               dim.width = windowWidth / colNum;

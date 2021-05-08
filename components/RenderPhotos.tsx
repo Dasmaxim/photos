@@ -58,11 +58,11 @@ const RenderPhotos: React.FC<Props> = (props) => {
       : <></>;
   };
 
-  const rowRenderer = (type:string | number, data:Asset, header:{[key:string]: {header:string, index:number}}) => {
+  const rowRenderer = (type:string | number, data:Asset) => {
     //We have only one view type so not checks are needed here
     return <PhotosChunk
       photo={data}
-      header={header}
+      header={props.header}
       opacity={props.opacity}
       numCol={props.numColumns}
       loading={props.loading}
