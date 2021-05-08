@@ -31,10 +31,11 @@ const PhotosChunk: React.FC<Props> = (props) => {
     }
   };
   
-  if(typeof props.photo.value === 'string'){
+  if(typeof props.header.value === 'string'){
+    //TODO: This is not correct. should check if header has index of photo and show image and header together
     return (
       <View style={{flex: 1, width: SCREEN_WIDTH,}}>
-        <Text>{props.photo.value}</Text>
+        <Text>{props.header.value}</Text>
       </View>
     )
   }else{
