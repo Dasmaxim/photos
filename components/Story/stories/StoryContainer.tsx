@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'column',
     backgroundColor: TINT_GRAY,
+    
     // marginTop: Platform.OS === 'ios' ? -40 : 0
   },
   customView: {
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
   topView: {
     position: 'absolute',
     flexDirection: 'column',
-    paddingTop: '3%',  
+    paddingTop: '3%',
   },
   bottomView: {
     position: 'absolute',

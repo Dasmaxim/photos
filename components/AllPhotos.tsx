@@ -49,15 +49,31 @@ const AllPhotos: React.FC<Props> = (props) => {
         flex: 1,
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
-        position: 'relative'
+        position: 'relative',
+        flexDirection: 'column'
       }}
     >
+      <Animated.View 
+        style={{
+          position:'relative',
+          height: props.storiesHeight,
+          zIndex: 2,
+        }}
+      >
       <Highlights
             medias={medias?[medias[0], medias[1], medias[2]]:undefined}
             duration={1500}
             numColumns={props.numColumns}
             height={props.storiesHeight}
       />
+      </Animated.View>
+      <View
+        style={{
+          position:'relative',
+          height: SCREEN_HEIGHT,
+          zIndex: 1,
+        }}
+      >
       <RenderPhotos
         photos={preparedMedia}
         loading={props.loading}
@@ -166,6 +182,15 @@ const AllPhotos: React.FC<Props> = (props) => {
         setImagePosition={setImagePosition}
         storiesHeight={props.storiesHeight}
       />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          top:0,
+          left: 0,
+          zIndex: 3,
+        }}
+      >
       <SingleMedia 
         modalShown={modalShown}
         setModalShown={setModalShown}
@@ -175,7 +200,7 @@ const AllPhotos: React.FC<Props> = (props) => {
         imagePosition={imagePosition}
         numColumns={props.numColumns}
       />
-      
+      </View>
     </View>
     ):(
       <View><Text>No Photos</Text></View>

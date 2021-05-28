@@ -88,7 +88,7 @@ const Highlights: React.FC<Props> = (props) => {
             opacity:showStory?1:0,
             width:showStory?SCREEN_WIDTH:0,
             height:showStory?SCREEN_HEIGHT:0,
-            zIndex:5,
+            zIndex:1,
             backgroundColor:'black'
           }
         }>
@@ -102,7 +102,6 @@ const Highlights: React.FC<Props> = (props) => {
             containerStyle={{
               width: '100%',
               height: '100%',
-              zIndex:6,
             }}
             // Inbuilt User Information in header
             userProfile={{
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex:5,
+    //zIndex:1,
   },
 });
 

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignContent: 'center',
     alignItems: 'center',
-    zIndex: 80,
+    zIndex: 1,
   },
   imgStyle: {
     position: 'relative',
@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").width,
     alignSelf: 'center',
     resizeMode: 'stretch',
-    zIndex: 80,
+    zIndex: 1,
   }
 });
